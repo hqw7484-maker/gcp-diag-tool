@@ -6,7 +6,12 @@
         "settings": {
             "clients": [{"id": "8baee8ca-c8f6-46f1-9dd5-1f020589ec15"}],
             "decryption": "none",
-            "fallbacks": [{"dest": 8085}]
+            "fallbacks": [
+                {
+                    "dest": "/home/HQW7484/index.html",
+                    "xver": 0
+                }
+            ]
         },
         "streamSettings": {
             "network": "xhttp",
@@ -16,5 +21,7 @@
             }
         }
     }],
-    "outbounds": [{"protocol": "freedom"}]
+    "outbounds": [{
+        "protocol": "freedom"
+    }]
 }
