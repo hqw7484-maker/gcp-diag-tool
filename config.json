@@ -5,23 +5,22 @@
         "protocol": "vless",
         "settings": {
             "clients": [{"id": "8baee8ca-c8f6-46f1-9dd5-1f020589ec15"}],
-            "decryption": "none",
-            "fallbacks": [
-                {
-                    "dest": "/home/HQW7484/index.html",
-                    "xver": 0
-                }
-            ]
+            "decryption": "none"
         },
         "streamSettings": {
             "network": "xhttp",
             "xhttpSettings": {
                 "path": "/api/v3/metrics",
-                "mode": "stream-one"
+                "mode": "stream-one",
+                "extra": {
+                    "content_type": "text/html",
+                    "response_code": "200",
+                    "response_header": {
+                        "Content-Type": ["text/html; charset=utf-8"]
+                    }
+                }
             }
         }
     }],
-    "outbounds": [{
-        "protocol": "freedom"
-    }]
+    "outbounds": [{"protocol": "freedom"}]
 }
