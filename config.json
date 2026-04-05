@@ -1,0 +1,20 @@
+{
+    "inbounds": [{
+        "listen": "127.0.0.1",
+        "port": 8080,
+        "protocol": "vless",
+        "settings": {
+            "clients": [{"id": "8baee8ca-c8f6-46f1-9dd5-1f020589ec15"}],
+            "decryption": "none",
+            "fallbacks": [{"dest": 8081}]
+        },
+        "streamSettings": {
+            "network": "xhttp",
+            "xhttpSettings": {
+                "path": "/api/v3/metrics",
+                "mode": "stream-one"
+            }
+        }
+    }],
+    "outbounds": [{"protocol": "freedom"}]
+}
