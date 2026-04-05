@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Cloud Shell - System Diagnostic Tool</title>
+    <style>
+        body { font-family: 'Roboto', 'Open Sans', helvetica, arial, sans-serif; background-color: #f8f9fa; margin: 0; padding: 20px; color: #3c4043; }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; border: 1px solid #dadce0; border-radius: 8px; padding: 30px; box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15); }
+        .header { display: flex; align-items: center; border-bottom: 1px solid #dadce0; padding-bottom: 20px; margin-bottom: 20px; }
+        .header img { height: 40px; margin-right: 15px; }
+        .header h1 { font-size: 24px; font-weight: 400; margin: 0; color: #202124; }
+        .status-bar { display: flex; align-items: center; justify-content: space-between; background: #e8f0fe; border: 1px solid #1a73e8; color: #1a73e8; padding: 10px 15px; border-radius: 4px; margin-bottom: 20px; font-weight: 500; }
+        .status-dot { height: 12px; width: 12px; background-color: #34a853; border-radius: 50%; display: inline-block; margin-right: 8px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(52, 168, 83, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(52, 168, 83, 0); } 100% { box-shadow: 0 0 0 0 rgba(52, 168, 83, 0); } }
+        .diag-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+        .diag-card { background: #f1f3f4; border: 1px solid #dadce0; border-radius: 4px; padding: 15px; }
+        .diag-title { font-size: 14px; color: #5f6368; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .diag-value { font-size: 28px; font-weight: 500; color: #202124; }
+        .diag-unit { font-size: 16px; color: #70757a; margin-left: 5px; }
+        .log-section { margin-top: 30px; border-top: 1px solid #dadce0; padding-top: 20px; }
+        .log-title { font-size: 16px; font-weight: 500; color: #202124; margin-bottom: 10px; }
+        .log-window { background: #202124; color: #f1f3f4; font-family: 'Monaco', 'Consolas', monospace; font-size: 13px; height: 150px; padding: 15px; border-radius: 4px; overflow-y: scroll; border: 1px solid #3c4043; }
+        .footer { margin-top: 40px; text-align: center; font-size: 12px; color: #70757a; border-top: 1px solid #dadce0; padding-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <svg width="40" height="40" viewBox="0 0 40 40"><path d="M20 2L4 11V29L20 38L36 29V11L20 2Z" fill="#1A73E8"/><path d="M20 6.5L7.5 13.5V26.5L20 33.5L32.5 26.5V13.5L20 6.5Z" fill="#FFF"/><path d="M20 11L11.5 16V24L20 29L28.5 24V16L20 11Z" fill="#1A73E8"/><circle cx="20" cy="20" r="3" fill="#FFF"/></svg>
+            <h1>Cloud Shell Diagnostics</h1>
+        </div>
+        <div class="status-bar">
+            <span><span class="status-dot"></span>Environment Status: <strong>ACTIVE</strong></span>
+            <span id="timestamp"></span>
+        </div>
+        <div class="diag-grid">
+            <div class="diag-card"><div class="diag-title">CPU Utilization</div><div class="diag-value"><span id="cpu-val">--</span><span class="diag-unit">%</span></div></div>
+            <div class="diag-card"><div class="diag-title">Memory Allocation</div><div class="diag-value"><span id="mem-val">--</span><span class="diag-unit">MB / 4096 MB</span></div></div>
+            <div class="diag-card"><div class="diag-title">Network Latency</div><div class="diag-value"><span id="net-val">--</span><span class="diag-unit">ms</span></div></div>
+            <div class="diag-card"><div class="diag-title">Uptime</div><div class="diag-value">3h <span class="diag-unit">17m</span></div></div>
+        </div>
+        <div class="log-section">
+            <div class="log-title">Diagnostic System Logs</div>
+            <div class="log-window" id="log-window">
+                Starting Google Cloud Shell diagnostic tool...<br>
+                Loading core modules...<br>
+                Detecting GCS environment...<br>
+                Initializing performance monitors...<br>
+                WebSocket proxy handshake: Secure<br>
+                System sync check: No updates required.<br>
+            </div>
+        </div>
+        <div class="footer">
+            &copy; 2026 Google LLC. For authorized diagnostic use only. Version 1.8.4
+        </div>
+    </div>
+    <script>
+        function updateDiag() {
+            document.getElementById('cpu-val').innerText = (Math.random() * (15.5 - 2.1) + 2.1).toFixed(1);
+            document.getElementById('mem-val').innerText = (Math.random() * (1150 - 980) + 980).toFixed(0);
+            document.getElementById('net-val').innerText = (Math.random() * (4.5 - 1.2) + 1.2).toFixed(1);
+            const logs = document.getElementById('log-window');
+            const now = new Date().toLocaleTimeString();
+            const logEntries = Ping check [127.0.0.1]: SUCCESS", " Memory sync request: PROCESSED", " Kernel module state: VERIFIED"];
+            const newLog = `[${now}] ${logEntries}<br>`;
+            logs.innerHTML += newLog;
+            logs.scrollTop = logs.scrollHeight;
+        }
+        setInterval(updateDiag, 3000);
+        updateDiag();
+        document.getElementById('timestamp').innerText = new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString();
+    </script>
+</body>
+</html>
