@@ -1,33 +1,37 @@
 #!/bin/bash
-# 自动清理环境，避免冲突
+# 1. 强力清理旧环境
 pkill -9 xray; pkill -9 cf; pkill -9 python3; rm -rf xray cf config.json index.html node.log cf.log
+sleep 2
 
-# 1. 环境对齐：下载兼容 XHTTP 26.x 的 Xray 核心 (这是解决报错的关键)
+# 2. 下载核心组件 (适配 XHTTP 26.x)
 echo "Downloading core components..."
 wget -q https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip && unzip -o Xray-linux-64.zip xray && chmod +x xray
 wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -O cf && chmod +x cf
 
-# 2. 从你的 GitHub 仓库远程拉取伪装文件和配置
-# !!! 重要 !!! 请修改下方 "你的GitHub用户名" 为你的真实用户名 !!! 重要 !!!
-GH_USER="你的GitHub用户名"
+# 3. 远程获取你的配置
+# 这里的用户名已经帮你填好了
+GH_USER="hqw7484-maker"
 GH_REPO="gcp-diag-tool"
 
 echo "Fetching remote configuration..."
 curl -sL "https://raw.githubusercontent.com/$GH_USER/$GH_REPO/main/index.html" -o index.html
 curl -sL "https://raw.githubusercontent.com/$GH_USER/$GH_REPO/main/config.json" -o config.json
 
-# 3. 启动服务 (真正的“一把梭”)
+# 4. 启动伪装与核心服务
 echo "Starting diagnostic tool..."
-# 在 8081 端口启动 Python 服务器，用于渲染诊断网页
-nohup python3 -m http.server 8081 --bind 127.0.0.1 > /dev/null 2>&1 &
-# 启动 Xray 接管 8080
+# 在 8085 端口启动伪装网页服务器
+nohup python3 -m http.server 8085 --bind 127.0.0.1 > /dev/null 2>&1 &
+
+# 启动 Xray (监听 8080，回落至 8085)
 nohup ./xray -c config.json > node.log 2>&1 &
-# 启动隧道
+
+# 启动 Cloudflare 隧道 (穿透 8080)
 nohup ./cf tunnel --url http://127.0.0.1:8080 > cf.log 2>&1 &
 
-# 4. 等待穿透并吐出链接
-echo -e "\nInitializing tunnel..."
-sleep 10
+# 5. 关键：等待隧道注册成功 (增加到 15 秒解决 1033 报错)
+echo "Initializing secure tunnel, please wait..."
+sleep 15
+
 echo -e "\n--- Diagnostic Tool is running at ---"
 grep -o 'https://[-0-9a-z]*\.trycloudflare.com' cf.log
 echo -e "------------------------------------"
