@@ -1,26 +1,34 @@
 {
-    "inbounds": [{
-        "listen": "127.0.0.1",
-        "port": 8080,
-        "protocol": "vless",
-        "settings": {
-            "clients": [{"id": "8baee8ca-c8f6-46f1-9dd5-1f020589ec15"}],
-            "decryption": "none"
+    "inbounds": [
+        {
+            "tag": "node-in",
+            "listen": "127.0.0.1",
+            "port": 8080,
+            "protocol": "vless",
+            "settings": {
+                "clients": [{"id": "8baee8ca-c8f6-46f1-9dd5-1f020589ec15"}],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "xhttp",
+                "xhttpSettings": { "path": "/api/v3/metrics", "mode": "stream-one" }
+            }
         },
-        "streamSettings": {
-            "network": "xhttp",
-            "xhttpSettings": {
-                "path": "/api/v3/metrics",
-                "mode": "stream-one",
-                "extra": {
-                    "content_type": "text/html",
-                    "response_code": "200",
-                    "response_header": {
-                        "Content-Type": ["text/html; charset=utf-8"]
-                    }
+        {
+            "tag": "web-in",
+            "listen": "127.0.0.1",
+            "port": 8081,
+            "protocol": "vless",
+            "settings": { "decryption": "none" },
+            "streamSettings": {
+                "network": "xhttp",
+                "xhttpSettings": { 
+                    "path": "/", 
+                    "mode": "stream-one",
+                    "extra": { "response_code": "200", "content_type": "text/html" } 
                 }
             }
         }
-    }],
+    ],
     "outbounds": [{"protocol": "freedom"}]
 }
