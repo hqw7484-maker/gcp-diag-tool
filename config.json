@@ -1,7 +1,7 @@
 {
     "inbounds": [{
         "listen": "127.0.0.1", "port": 8080, "protocol": "vless",
-        "settings": { "clients": [{"id": "8baee8ca-c8f6-46f1-9dd5-1f020589ec15"}], "decryption": "none" },
+        "settings": { "clients": [{"id": "__YOUR_UUID__"}], "decryption": "none" },
         "streamSettings": { "network": "ws", "wsSettings": {"path": "/api/v3/metrics"} }
     }],
     "outbounds": [{"protocol": "freedom"}]

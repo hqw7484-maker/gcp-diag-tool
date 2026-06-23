@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+
+# Environment
+.env
+*.pem
+*.key
+
+# Logs
+*.log
+cf_web.log
+cf_node.log
+node.log
+web.log
+.ka_log
+.ka_tmp
+.keepalive_ping
+
+# Generated
+env.js
+raw-api/
+tunnel.yml
+
+# OS
+.DS_Store
+Thumbs.db
